@@ -4,6 +4,24 @@ from abc import ABC, abstractmethod
 from random import gauss
 
 
+def R2P(x):
+    """
+    Convert a complex number from rectangular coordinates to polar coordinates.
+
+    Parameters:
+    - x (complex): Input complex number in rectangular form.
+
+    Returns:
+    - magnitude (float): Magnitude (absolute value) of the complex number.
+    - angle (float): Angle (argument) of the complex number in radians.
+
+    Example:
+    >>> R2P(3 + 4j)
+    (5.0, 0.93)  # Magnitude is 5.0, angle is approximately 0.93 radians.
+    """
+    return abs(x), np.angle(x)
+
+
 def dB_to_linear(dB: float) -> float:
     """Convert decibel values to linear scale.
 
@@ -29,9 +47,7 @@ def PL_dB(
     PL_d0_dB: # path loss (dB) at reference distance
     """
     return -(
-        PL_d0_dB
-        + 10 * path_loss_exponent * np.log10(distance_m)
-        + gauss(0, sigma_dB)
+        PL_d0_dB + 10 * path_loss_exponent * np.log10(distance_m) + gauss(0, sigma_dB)
     )
 
 
@@ -76,8 +92,9 @@ class Hd(H):
 
         rayleigh = []
         for _ in range(500):
-            temp = np.random.normal(loc=0, scale=np.sqrt(
-                2) / 2, size=(self.M, 2)).view(np.complex128)
+            temp = np.random.normal(loc=0, scale=np.sqrt(2) / 2, size=(self.M, 2)).view(
+                np.complex128
+            )
             rayleigh.append(temp.T)
 
         return np.sqrt(dB_to_linear(pl)) * np.mean(rayleigh, 0)
