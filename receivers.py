@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def mrc_receiver(received_signal, channel_gains):
     """
     Maximum Ratio Combining (MRC) receiver

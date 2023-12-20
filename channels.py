@@ -1,6 +1,31 @@
 import numpy as np
 
 
+def additive_white_gaussian_noise_channel(
+    x, n_rx=4, attenuation=0.95, noise_power=1e-5
+):
+    """
+    Add AWGN to a signal
+
+    Parameters:
+    - x: Signal
+    - n_rx: Number of receive antennas
+    - attenuation: Channel attenuation
+    - noise_power: Noise power
+
+    Returns:
+    - y: Signal with AWGN
+    """
+
+    w = np.sqrt(noise_power / 2) * (
+        np.random.normal(0, 1, n_rx) + 1j * np.random.normal(0, 1, n_rx)
+    )
+
+    y = attenuation * x + w
+
+    return y
+
+
 def line_of_sight_simo_channel(
     x,
     n_rx=4,
@@ -27,6 +52,10 @@ def line_of_sight_simo_channel(
     Returns:
     - y: Received symbol
     - h: Channel spatial signature
+
+    Reference:
+    - [1] Manikas, A. (2019). Modelling of SIMO, MISO, and MIMO Antenna Array. Lecture slides presented in EE401: Advanced Communication Theory at Imperial College London.
+
     """
 
     c = 3e8  # Speed of light
@@ -46,28 +75,3 @@ def line_of_sight_simo_channel(
     y = h * x + w
 
     return y, h
-
-
-def additive_white_gaussian_noise_channel(
-    x, n_rx=4, attenuation=0.95, noise_power=1e-5
-):
-    """
-    Add AWGN to a signal
-
-    Parameters:
-    - x: Signal
-    - n_rx: Number of receive antennas
-    - attenuation: Channel attenuation
-    - noise_power: Noise power
-
-    Returns:
-    - y: Signal with AWGN
-    """
-
-    w = np.sqrt(noise_power / 2) * (
-        np.random.normal(0, 1, n_rx) + 1j * np.random.normal(0, 1, n_rx)
-    )
-
-    y = attenuation * x + w
-
-    return y
