@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: qpsk_stage2
+    id: qpsk_sim
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: qpsk_stage2
+    title: qpsk_sim
     window_size: 2000,2000
   states:
     bus_sink: false
@@ -451,7 +451,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 316.0]
+    coordinate: [400, 316.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
