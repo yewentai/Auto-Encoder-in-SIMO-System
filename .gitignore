@@ -4,4 +4,4 @@
 # python
 __pycache__/
 
-.pdf
+*.pdf
