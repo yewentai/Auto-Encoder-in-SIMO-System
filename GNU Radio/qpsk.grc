@@ -237,7 +237,7 @@ blocks:
     alias: ''
     comment: ''
     constellation: qpsk
-    differential: 'False'
+    differential: 'True'
     excess_bw: excess_bw
     log: 'False'
     maxoutbuf: '0'
