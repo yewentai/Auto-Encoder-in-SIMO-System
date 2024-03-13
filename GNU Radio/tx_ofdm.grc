@@ -238,7 +238,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [88, 80.0]
+    coordinate: [72, 120.0]
     rotation: 0
     state: disabled
 - name: blocks_multiply_const_vxx_0
@@ -316,7 +316,7 @@ blocks:
     bus_structure: null
     coordinate: [728, 828.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_tag_gate_0
   id: blocks_tag_gate
   parameters:
@@ -397,7 +397,7 @@ blocks:
     bus_structure: null
     coordinate: [274, 816]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_chunks_to_symbols_xx_0
   id: digital_chunks_to_symbols_xx
   parameters:
@@ -523,7 +523,7 @@ blocks:
     bus_structure: null
     coordinate: [512, 784.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_packet_headergenerator_bb_0
   id: digital_packet_headergenerator_bb
   parameters:
@@ -1029,7 +1029,7 @@ blocks:
     bus_structure: null
     coordinate: [1000, 620.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: virtual_sink_0
   id: virtual_sink
   parameters:
@@ -1081,7 +1081,7 @@ blocks:
     bus_structure: null
     coordinate: [1000, 716.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: virtual_source_0
   id: virtual_source
   parameters:
@@ -1146,7 +1146,7 @@ blocks:
     bus_structure: null
     coordinate: [88, 836.0]
     rotation: 0
-    state: enabled
+    state: disabled
 
 connections:
 - [analog_random_source_x_0, '0', blocks_stream_to_tagged_stream_0, '0']
