@@ -114,7 +114,7 @@ else:
 # In[5]:
 
 
-snr = 10
+snr = 10s
 num_mess = 6400  # number of messages to test
 minErr = 1  # minimum number of errors
 minSym = 1e6  # minimum number of symbols
@@ -123,8 +123,12 @@ totErr = 0  # total number of errors
 while totErr < minErr or totSym < minSym:
     messages = torch.randint(0, CONFIG["M"], size=(num_mess,)).to(device)
     one_hot = F.one_hot(messages).float()
+    zeros = torch.zeros
     tx = encoder(one_hot)
+
+    # integration of the channel model
     rx = awgn(tx, snr)
+
     rx_constant = (
         rx.clone().detach().requires_grad_(False)
     )  # no gradients in the channel model
@@ -140,3 +144,83 @@ while totErr < minErr or totSym < minSym:
 
 ser = totErr / totSym
 print(f"SER: {ser}")
+
+# In[6]:
+
+from gnuradio import blocks
+import pmt
+from gnuradio import channels
+from gnuradio.filter import firdes
+from gnuradio import gr
+from gnuradio.fft import window
+
+
+class channel(gr.top_block):
+
+    def __init__(self):
+        gr.top_block.__init__(self, "Not titled yet", catch_exceptions=True)
+
+        self.samp_rate = samp_rate = 32000
+
+        ##################################################
+        # Blocks
+        ##################################################
+
+        self.channels_channel_model_0_0 = channels.channel_model(
+            noise_voltage=0.1,
+            frequency_offset=0.1,
+            epsilon=1.0,
+            taps=[1.0],
+            noise_seed=0,
+            block_tags=False,
+        )
+        self.blocks_throttle2_0 = blocks.throttle(
+            gr.sizeof_gr_complex * 1,
+            samp_rate,
+            True,
+            (
+                0
+                if "auto" == "auto"
+                else max(
+                    int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1
+                )
+            ),
+        )
+        self.blocks_file_source_0_0 = blocks.file_source(
+            gr.sizeof_gr_complex * 1, "file/iq_samples.bin", False, 0, 0
+        )
+        self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
+        self.blocks_file_sink_0_0 = blocks.file_sink(
+            gr.sizeof_gr_complex * 1, "file/rx_samples.bin", False
+        )
+        self.blocks_file_sink_0_0.set_unbuffered(True)
+
+        ##################################################
+        # Connections
+        ##################################################
+        self.connect((self.blocks_file_source_0_0, 0), (self.blocks_throttle2_0, 0))
+        self.connect((self.blocks_throttle2_0, 0), (self.channels_channel_model_0_0, 0))
+        self.connect(
+            (self.channels_channel_model_0_0, 0), (self.blocks_file_sink_0_0, 0)
+        )
+
+    def closeEvent(self, event):
+        self.stop()
+        self.wait()
+        event.accept()
+
+    def get_samp_rate(self):
+        return self.samp_rate
+
+    def set_samp_rate(self, samp_rate):
+        self.samp_rate = samp_rate
+        self.blocks_throttle2_0.set_sample_rate(self.samp_rate)
+
+
+def channel_awgn(top_block_cls=channel, options=None):
+    tb = top_block_cls()
+    tb.start()
+    tb.wait()
+
+
+channel_awgn()
