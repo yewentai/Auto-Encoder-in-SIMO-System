@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read IQ samples from binary file
-with open("GNU Radio/IQ_samples.bin", "rb") as f:
+with open("file/IQ_samples.bin", "rb") as f:
     IQ_samples = np.frombuffer(f.read(), dtype=np.int16)
 
 # Separate I and Q components
