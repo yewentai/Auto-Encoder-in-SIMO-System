@@ -52,7 +52,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: file/rx_samples.bin
+    file: file/rx.bin
     type: complex
     unbuffered: 'True'
     vlen: '1'
@@ -60,7 +60,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 356.0]
+    coordinate: [632, 124.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0_0
@@ -70,7 +70,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: file/iq_samples.bin
+    file: file/tx.bin
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -82,7 +82,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [128, 344.0]
+    coordinate: [48, 112.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -103,7 +103,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [384, 360.0]
+    coordinate: [256, 128.0]
     rotation: 0
     state: enabled
 - name: channels_channel_model_0_0
@@ -124,7 +124,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [560, 340.0]
+    coordinate: [424, 108.0]
     rotation: 0
     state: enabled
 

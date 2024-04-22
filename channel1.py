@@ -29,8 +29,8 @@ class channel(gr.top_block):
         ##################################################
 
         self.channels_channel_model_0_0 = channels.channel_model(
-            noise_voltage=0.1,
-            frequency_offset=0.1,
+            noise_voltage=0,
+            frequency_offset=0,
             epsilon=1.0,
             taps=[1.0],
             noise_seed=0,
@@ -49,11 +49,11 @@ class channel(gr.top_block):
             ),
         )
         self.blocks_file_source_0_0 = blocks.file_source(
-            gr.sizeof_gr_complex * 1, "file/iq_samples.bin", False, 0, 0
+            gr.sizeof_gr_complex * 1, "./file/tx.bin", False, 0, 0
         )
         self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_file_sink_0_0 = blocks.file_sink(
-            gr.sizeof_gr_complex * 1, "file/rx_samples.bin", False
+            gr.sizeof_gr_complex * 1, "./file/rx.bin", False
         )
         self.blocks_file_sink_0_0.set_unbuffered(True)
 

@@ -29,6 +29,6 @@ amplitude = 10000
 IQ_samples = generate_IQ_samples(num_samples, sample_rate, frequency, amplitude)
 
 # Save to file
-filename = "./file/IQ_samples.bin"
+filename = "./file/tx.bin"
 save_IQ_samples_to_file(IQ_samples, filename)
 print(f"Generated {num_samples} IQ samples and saved to {filename}")
