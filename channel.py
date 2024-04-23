@@ -68,9 +68,9 @@ class channel(gr.top_block, Qt.QWidget):
         ##################################################
 
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
-        self.blocks_file_source_0_0 = blocks.file_source(gr.sizeof_gr_complex*1, 'file/iq_samples.bin', False, 0, 0)
+        self.blocks_file_source_0_0 = blocks.file_source(gr.sizeof_gr_complex*1, 'file/tx.dat', False, 0, 0)
         self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0_0 = blocks.file_sink(gr.sizeof_gr_complex*1, 'file/rx_samples.bin', False)
+        self.blocks_file_sink_0_0 = blocks.file_sink(gr.sizeof_gr_complex*1, 'file/rx.dat', False)
         self.blocks_file_sink_0_0.set_unbuffered(True)
 
 

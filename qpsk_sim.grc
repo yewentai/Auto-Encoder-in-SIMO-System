@@ -66,6 +66,26 @@ blocks:
     coordinate: [624, 12.0]
     rotation: 0
     state: enabled
+- name: geometric_constellation_shaping
+  id: variable_constellation_rect
+  parameters:
+    comment: ''
+    const_points: '[-0.214+0.601j,-0.093-0.077j,1.016+0.445j,-1.328+0.080j,1.212-0.224j,-0.445-1.018j,-0.258+1.256j,0.801-0.820j,0.126-0.664j,-0.805-0.470j,0.402+1.045j,-0.871+0.802j,0.216-1.310j,-0.675+0.162j,0.557-0.197j,0.367+0.399j]'
+    imag_sect: '16'
+    precision: '8'
+    real_sect: '16'
+    rot_sym: '16'
+    soft_dec_lut: None
+    sym_map: '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]'
+    w_imag_sect: '1'
+    w_real_sect: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [936, 8.0]
+    rotation: 0
+    state: enabled
 - name: noise_volt
   id: variable_qtgui_range
   parameters:
@@ -87,26 +107,6 @@ blocks:
     coordinate: [456, 12.0]
     rotation: 0
     state: enabled
-- name: qpsk
-  id: variable_constellation_rect
-  parameters:
-    comment: ''
-    const_points: '[0.707+0.707j, -0.707+0.707j, -0.707-0.707j, 0.707-0.707j]'
-    imag_sect: '2'
-    precision: '8'
-    real_sect: '2'
-    rot_sym: '4'
-    soft_dec_lut: None
-    sym_map: '[0, 1, 2, 3]'
-    w_imag_sect: '1'
-    w_real_sect: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [584, 320.0]
-    rotation: 0
-    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -123,7 +123,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '4'
+    value: '16'
   states:
     bus_sink: false
     bus_source: false
@@ -140,10 +140,10 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: '0'
+    start: '1'
     step: '0.0001'
     stop: '1.001'
-    value: '0'
+    value: '1'
     widget: counter
   states:
     bus_sink: false
@@ -159,9 +159,9 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: ''
+    file: ./file/rx.dat
     type: byte
-    unbuffered: 'False'
+    unbuffered: 'True'
     vlen: '1'
   states:
     bus_sink: false
@@ -177,12 +177,12 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: ''
+    file: ./file/tx.dat
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
-    repeat: 'True'
+    repeat: 'False'
     type: byte
     vlen: '1'
   states:
@@ -212,7 +212,7 @@ blocks:
     bus_structure: null
     coordinate: [416, 192.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: channels_channel_model_0
   id: channels_channel_model
   parameters:
@@ -240,14 +240,14 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    constellation: qpsk
+    constellation: geometric_constellation_shaping
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [800, 196.0]
+    coordinate: [784, 196.0]
     rotation: 0
     state: enabled
 - name: digital_constellation_modulator_0
@@ -256,8 +256,8 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    constellation: qpsk
-    differential: 'True'
+    constellation: geometric_constellation_shaping
+    differential: 'False'
     excess_bw: excess_bw
     log: 'False'
     maxoutbuf: '0'
@@ -269,7 +269,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 184.0]
+    coordinate: [216, 184.0]
     rotation: 0
     state: enabled
 

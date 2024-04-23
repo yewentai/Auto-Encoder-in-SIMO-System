@@ -21,7 +21,7 @@ from utils import Encoder, Decoder, awgn, ser_mqam_awgn  # Import custom utils
 
 CONFIG = {
     "M": 16,  # Number of constellation points
-    "flag_train_model": True,  # Flag to control training
+    "flag_train_model": False,  # Flag to control training
     "training_snr": 20,  # Training SNR (dB)
     "checkpoint_file": "./model/ae_siso_awgn_16qam.pth",
 }
@@ -170,3 +170,15 @@ while totErr < minErr or totSym < minSym:
 
 ser = totErr / totSym
 print(f"SER: {ser}")
+
+# Generate transmitted symbols using the encoder
+tensor = torch.arange(16).to(device)
+one_hot = F.one_hot(tensor, CONFIG["M"]).float()
+tx = encoder(one_hot)
+tx = tx.to("cpu").detach().numpy()
+for i in range(CONFIG["M"]):
+    plt.scatter(tx[i, 0], tx[i, 1])
+
+constellation = np.array([tx[:, 0] + 1j * tx[:, 1]]).T
+# print the constellation points
+print(constellation)
