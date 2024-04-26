@@ -21,7 +21,7 @@ from utils import Encoder, Decoder, awgn, ser_mqam_awgn  # Import custom utils
 
 CONFIG = {
     "M": 16,  # Number of constellation points
-    "flag_train_model": False,  # Flag to control training
+    "flag_train_model": True,  # Flag to control training
     "training_snr": 20,  # Training SNR (dB)
     "checkpoint_file": "./model/ae_siso_awgn_16qam.pth",
 }

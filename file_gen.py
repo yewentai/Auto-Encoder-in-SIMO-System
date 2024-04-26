@@ -43,15 +43,15 @@ def save_IQ_samples_to_file(IQ_samples, filename):
 # save_IQ_samples_to_file(IQ_samples, filename)
 # print(f"Generated {num_samples} IQ samples and saved to {filename}")
 
-# # Generate messages
-# num_messages = 100000
-# M = 16
-# messages = generate_message(num_messages, M)
+# Generate messages
+num_messages = 100000
+M = 16
+messages = generate_message(num_messages, M)
 
-# # Save to file
-# filename = "./file/tx.dat"
-# save_message_to_file(messages, filename)
-# print(f"Generated {num_messages} messages and saved to {filename}")
+# Save to file
+filename = "./file/tx.dat"
+save_message_to_file(messages, filename)
+print(f"Generated {num_messages} messages and saved to {filename}")
 
 # read tx.bin and rx.bin
 with open("./file/tx.dat", "rb") as f:
