@@ -49,11 +49,11 @@ class channel(gr.top_block):
             ),
         )
         self.blocks_file_source_0_0 = blocks.file_source(
-            gr.sizeof_gr_complex * 1, "./file/tx.bin", False, 0, 0
+            gr.sizeof_gr_complex * 1, "./file/tx.dat", False, 0, 0
         )
         self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_file_sink_0_0 = blocks.file_sink(
-            gr.sizeof_gr_complex * 1, "./file/rx.bin", False
+            gr.sizeof_gr_complex * 1, "./file/rx.dat", False
         )
         self.blocks_file_sink_0_0.set_unbuffered(True)
 
