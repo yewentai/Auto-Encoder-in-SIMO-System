@@ -155,13 +155,15 @@ def simo_rayleigh_channel(tx, snr, device):
     return rx_csi
 
 
-def train_model(encoder, decoder, optimizer, tot_epochs, loss_hist, device):
+def train_model(
+    encoder, decoder, optimizer, tot_epochs, loss_hist, num_messages, device
+):
     """
     Train the model.
     - encoder: the encoder model
     - decoder: the decoder model
     - optimizer: the optimizer
-    - tot_epochs: the number of epochs to train
+    - tot_epochs: the total number of epochs to train
     - loss_hist: the history of loss values
     """
 
@@ -172,7 +174,7 @@ def train_model(encoder, decoder, optimizer, tot_epochs, loss_hist, device):
         # Use tqdm to show a progress bar
         for epoch in tqdm(range(len(loss_hist), tot_epochs), desc="training process"):
             messages = torch.randint(
-                0, CONFIG_TRAIN["M"], size=(num_messages,), device=device
+                0, CONFIG_TRAIN["M"], size=(num_messages), device=device
             )  # generate random messages
             one_hot = F.one_hot(
                 messages, CONFIG_TRAIN["M"]
