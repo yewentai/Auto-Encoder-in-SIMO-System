@@ -29,7 +29,7 @@ class channel(gr.top_block):
         ##################################################
 
         self.channels_channel_model_0_0 = channels.channel_model(
-            noise_voltage=0,
+            noise_voltage=0.1,
             frequency_offset=0,
             epsilon=1.0,
             taps=[1.0],
@@ -55,7 +55,7 @@ class channel(gr.top_block):
         self.blocks_file_sink_0_0 = blocks.file_sink(
             gr.sizeof_gr_complex * 1, "./file/rx.dat", False
         )
-        self.blocks_file_sink_0_0.set_unbuffered(True)
+        self.blocks_file_sink_0_0.set_unbuffered(False)
 
         ##################################################
         # Connections
