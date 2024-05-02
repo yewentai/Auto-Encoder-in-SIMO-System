@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: channel
+    id: channel_simo
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -42,17 +42,17 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [136, 8.0]
+    coordinate: [184, 12]
     rotation: 0
     state: enabled
-- name: blocks_file_sink_0_0
+- name: blocks_file_sink_0_0_0
   id: blocks_file_sink
   parameters:
     affinity: ''
     alias: ''
     append: 'False'
     comment: ''
-    file: ../file/rx.dat
+    file: ../file/rx2.dat
     type: complex
     unbuffered: 'False'
     vlen: '1'
@@ -60,7 +60,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [472, 108.0]
+    coordinate: [648, 276.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0_0
@@ -82,7 +82,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 96.0]
+    coordinate: [16, 96.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -103,128 +103,34 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [160, 112.0]
+    coordinate: [168, 112.0]
     rotation: 0
     state: enabled
-- name: channels_channel_model_0_0
-  id: channels_channel_model
+- name: channels_fading_model_0
+  id: channels_fading_model
   parameters:
+    K: '4.0'
+    LOS: 'False'
+    N: '8'
     affinity: ''
     alias: ''
-    block_tags: 'False'
     comment: ''
-    epsilon: '1.0'
-    freq_offset: '0'
+    fDTs: 0.01/samp_rate
     maxoutbuf: '0'
     minoutbuf: '0'
-    noise_voltage: '0'
     seed: '0'
-    taps: '1.0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [296, 92.0]
-    rotation: 0
-    state: enabled
-- name: qtgui_const_sink_x_0
-  id: qtgui_const_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'False'
-    axislabels: 'True'
-    color1: '"blue"'
-    color10: '"dark blue"'
-    color2: '"red"'
-    color3: '"green"'
-    color4: '"black"'
-    color5: '"cyan"'
-    color6: '"magenta"'
-    color7: '"yellow"'
-    color8: '"dark red"'
-    color9: '"dark green"'
-    comment: ''
-    grid: 'False'
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    legend: 'True'
-    marker1: '0'
-    marker10: '0'
-    marker2: '0'
-    marker3: '0'
-    marker4: '0'
-    marker5: '0'
-    marker6: '0'
-    marker7: '0'
-    marker8: '0'
-    marker9: '0'
-    name: '""'
-    nconnections: '1'
-    size: '1024'
-    style1: '0'
-    style10: '0'
-    style2: '0'
-    style3: '0'
-    style4: '0'
-    style5: '0'
-    style6: '0'
-    style7: '0'
-    style8: '0'
-    style9: '0'
-    tr_chan: '0'
-    tr_level: '0.0'
-    tr_mode: qtgui.TRIG_MODE_FREE
-    tr_slope: qtgui.TRIG_SLOPE_POS
-    tr_tag: '""'
-    type: complex
-    update_time: '0.10'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    xmax: '2'
-    xmin: '-2'
-    ymax: '2'
-    ymin: '-2'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [472, 248.0]
+    coordinate: [336, 208.0]
     rotation: 0
     state: enabled
 
 connections:
 - [blocks_file_source_0_0, '0', blocks_throttle2_0, '0']
-- [blocks_throttle2_0, '0', channels_channel_model_0_0, '0']
-- [channels_channel_model_0_0, '0', blocks_file_sink_0_0, '0']
-- [channels_channel_model_0_0, '0', qtgui_const_sink_x_0, '0']
+- [blocks_throttle2_0, '0', channels_fading_model_0, '0']
+- [channels_fading_model_0, '0', blocks_file_sink_0_0_0, '0']
 
 metadata:
   file_format: 1

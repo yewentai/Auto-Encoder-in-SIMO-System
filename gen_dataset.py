@@ -24,7 +24,7 @@ tx = tx.detach().numpy()
 with open("./file/tx.dat", "wb") as f:
     f.write(tx.tobytes())
 # run channel.py to generate rx
-os.system("python3 ./gnuradio/channel1.py")
+os.system("python3 ./gnuradio/channel_model.py")
 # read rx from a binary file
 with open("./file/rx.dat", "rb") as f:
     rx = np.frombuffer(f.read(), dtype=np.float32)
