@@ -16,7 +16,7 @@ from tqdm import tqdm
 import os
 
 from utils import Encoder, Decoder, awgn
-from tx_gen import *
+from gen_tx import *
 
 
 # In[2]:
