@@ -9,7 +9,6 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from keras.utils import to_categorical
 from torch.optim import SGD, Adam
 from tqdm import tqdm
 from utils import Encoder, Decoder, awgn
@@ -274,4 +273,3 @@ ax1.set_title("Tx sym, Ant 1, T1")
 ax2.set_title("Tx sym, Ant 2, T1")
 ax3.set_title("Tx sym, Ant 1, T2")
 ax4.set_title("Tx sym, Ant 2, T2")
-

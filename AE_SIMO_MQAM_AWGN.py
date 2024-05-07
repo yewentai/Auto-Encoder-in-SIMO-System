@@ -9,7 +9,6 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 import matplotlib.pyplot as plt
-from keras.utils import to_categorical
 from torch.optim import SGD, Adam
 from tqdm import tqdm
 from utils import Encoder, Decoder, awgn
