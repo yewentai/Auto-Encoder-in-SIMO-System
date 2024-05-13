@@ -32,7 +32,7 @@ class channel(gr.top_block):
         # Normalized maximum doppler frequency (f_doppler / f_samprate)
         self.normalized_max_doppler = normalized_max_doppler = 0.01 / samp_rate
         # Include Line-of-Site path? selects between Rayleigh (NLOS) and Rician (LOS) models. False is Rayleigh, True is Rician
-        self.los_model = los_model = False
+        self.los_model = los_model = True
         # Rician factor (ratio of the specular power to the scattered power)
         self.rician_factor = rician_factor = 4.0
         # Number to seed the noise generators
