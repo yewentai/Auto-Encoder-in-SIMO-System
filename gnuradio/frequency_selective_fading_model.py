@@ -37,10 +37,10 @@ class channel(gr.top_block):
         self.rician_factor = rician_factor = 4.0
         # Number to seed the noise generators
         self.seed = seed = 0
-        # Time delay in the fir filter (in samples) for each arriving Wide-Sense Stationary Uncorrelated Scattering (WSSUS) Ray
-        self.pdp_delays = pdp_delays = (0.0, 0.1, 1.3)
-        # Magnitude corresponding to each WSSUS Ray (linear)
-        self.pdp_magnitudes = pdp_magnitudes = (1, 0.99, 0.97)
+        # Time delay in the fir filter (in samples) for each arriving Wide-Sense Stationary Uncorrelated Scattering (WSSUS) Ray (defalut, min, max)
+        self.pdp_delays = pdp_delays = [0.0]
+        # Magnitude corresponding to each WSSUS Ray (linear) (defalut, min, max)
+        self.pdp_magnitudes = pdp_magnitudes = [1.0]
         # Number of FIR taps to use in selective fading model
         self.num_taps = num_taps = 8
         self.file_source_path = file_source_path = "./file/tx.dat"

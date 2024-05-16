@@ -30,7 +30,7 @@ class channel(gr.top_block):
         # The number of sinusoids to use in simulating the channel; 8 is a good value
         self.num_sinusoids = num_sinusoids = 8
         # Normalized maximum Doppler frequency, fD * Ts
-        self.normalized_max_doppler = normalized_max_doppler = 0.01 / samp_rate
+        self.normalized_max_doppler = normalized_max_doppler = 0.1 / samp_rate
         # Include Line-of-Site path? selects between Rayleigh (NLOS) and Rician (LOS) models. False is Rayleigh, True is Rician
         self.los_model = los_model = False
         # Rician factor (ratio of the specular power to the scattered power)

@@ -6,7 +6,6 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Not titled yet
-# Author: yewentai
 # GNU Radio version: 3.10.9.2
 
 from gnuradio import blocks
@@ -25,31 +24,36 @@ class channel(gr.top_block):
         ##################################################
         # Variables
         ##################################################
-        # The sample rate of the signal
-        self.samp_rate = samp_rate = 3200000
-        # The AWGN noise level as a voltage (to be calculated externally to meet, say, a desired SNR).
-        self.noise_voltage = noise_voltage = 0.1
-        # The normalized frequency offset. 0 is no offset; 0.25 would be, for example, one quarter of a sample time.
-        self.frequency_offset = frequency_offset = 0
-        # The sample timing offset to emulate the different rates between the sample clocks of the transmitter and receiver. 1.0 is no difference.
+        self.samp_rate = samp_rate = 32000
+        self.num_sinusoids = num_sinusoids = 8
+        self.normalized_max_doppler = normalized_max_doppler = 4
+        self.flag_los = flag_los = True
+        self.rician_factor = rician_factor = 4.0
+        self.seed = seed = 0
+        self.noise_voltage = noise_voltage = 0.2
+        self.frequency_offset = frequency_offset = 0.0
         self.epsilon = epsilon = 1.0
-        # Taps of a FIR filter to emulate a multipath delay profile. Default is 1+0j meaning a single tap, and thus no multipath.
         self.taps = taps = [1.0]
-        # A random number generator seed for the noise source.
         self.noise_seed = noise_seed = 0
-        self.file_source_path = file_source_path = "./file/tx.dat"
-        self.file_sink_path = file_sink_path = "./file/rx1.dat"
 
         ##################################################
         # Blocks
         ##################################################
 
-        self.channels_channel_model_0_0 = channels.channel_model(
+        self.channels_fading_model_0 = channels.fading_model(
+            num_sinusoids,
+            (normalized_max_doppler / samp_rate),
+            flag_los,
+            rician_factor,
+            seed,
+        )
+        self.channels_channel_model_0 = channels.channel_model(
             noise_voltage=noise_voltage,
             frequency_offset=frequency_offset,
             epsilon=epsilon,
             taps=taps,
             noise_seed=noise_seed,
+            block_tags=False,
         )
         self.blocks_throttle2_0 = blocks.throttle(
             gr.sizeof_gr_complex * 1,
@@ -64,21 +68,22 @@ class channel(gr.top_block):
             ),
         )
         self.blocks_file_source_0_0 = blocks.file_source(
-            gr.sizeof_gr_complex * 1, file_source_path, False, 0, 0
+            gr.sizeof_gr_complex * 1, "./file/tx.dat", False, 0, 0
         )
         self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0_0 = blocks.file_sink(
-            gr.sizeof_gr_complex * 1, file_sink_path, False
+        self.blocks_file_sink_0 = blocks.file_sink(
+            gr.sizeof_gr_complex * 1, "./file/rx.dat", False
         )
-        self.blocks_file_sink_0_0.set_unbuffered(False)
+        self.blocks_file_sink_0.set_unbuffered(False)
 
         ##################################################
         # Connections
         ##################################################
         self.connect((self.blocks_file_source_0_0, 0), (self.blocks_throttle2_0, 0))
-        self.connect((self.blocks_throttle2_0, 0), (self.channels_channel_model_0_0, 0))
+        self.connect((self.blocks_throttle2_0, 0), (self.channels_fading_model_0, 0))
+        self.connect((self.channels_channel_model_0, 0), (self.blocks_file_sink_0, 0))
         self.connect(
-            (self.channels_channel_model_0_0, 0), (self.blocks_file_sink_0_0, 0)
+            (self.channels_fading_model_0, 0), (self.channels_channel_model_0, 0)
         )
 
     def closeEvent(self, event):
@@ -92,9 +97,13 @@ class channel(gr.top_block):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
         self.blocks_throttle2_0.set_sample_rate(self.samp_rate)
+        self.channels_fading_model_0.set_fDTs(
+            (self.normalized_max_doppler / self.samp_rate)
+        )
 
 
 def main(top_block_cls=channel, options=None):
+
     tb = top_block_cls()
     tb.start()
     tb.wait()
