@@ -11,7 +11,7 @@ from torch import nn
 import matplotlib.pyplot as plt
 from torch.optim import SGD, Adam
 from tqdm import tqdm
-from utils import Encoder, Decoder, awgn
+from utils import Encoder, Decoder, additive_white_gaussian_noise_channel
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)
@@ -58,8 +58,8 @@ if flag_train_model:
         ).float()  # convert to one hot encoding shape=(16000, M)
         tx = encoder(one_hot)
 
-        rx1 = awgn(tx, train_snr)
-        rx2 = awgn(tx, train_snr)
+        rx1 = additive_white_gaussian_noise_channel(tx, train_snr)
+        rx2 = additive_white_gaussian_noise_channel(tx, train_snr)
         rx = torch.cat((rx1, rx2), dim=1)
 
         y_pred = decoder(rx)
@@ -107,8 +107,8 @@ for snr in SNR_dB:
         messages = torch.randint(0, M, size=(num_mess,)).to(device)
         one_hot = F.one_hot(messages).float()
         tx = encoder(one_hot)
-        rx1 = awgn(tx, snr)
-        rx2 = awgn(tx, snr)
+        rx1 = additive_white_gaussian_noise_channel(tx, snr)
+        rx2 = additive_white_gaussian_noise_channel(tx, snr)
         rx = torch.cat((rx1, rx2), dim=1)
         y_pred = decoder(rx)
         y_pred = y_pred.argmax(dim=1)
@@ -165,4 +165,3 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.show()
-

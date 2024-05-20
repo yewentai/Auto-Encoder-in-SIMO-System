@@ -11,7 +11,7 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 from torch.optim import SGD, Adam
 from tqdm import tqdm
-from utils import Encoder, Decoder, awgn
+from utils import Encoder, Decoder, additive_white_gaussian_noise_channel
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)

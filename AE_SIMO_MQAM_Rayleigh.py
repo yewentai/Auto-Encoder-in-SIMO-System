@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os
 
-from utils import Encoder, Decoder, awgn
+from utils import Encoder, Decoder, additive_white_gaussian_noise_channel
 from gen_tx import *
 
 
@@ -146,7 +146,7 @@ def simo_rayleigh_channel(tx, snr, device):
     rx = torch.stack((rx_real1, rx_imag1, rx_real2, rx_imag2), dim=1)
 
     # Add AWGN noise
-    rx = awgn(rx, snr)
+    rx = additive_white_gaussian_noise_channel(rx, snr)
 
     # Concatenate channel state information
     rx_csi = torch.cat((rx, csi), dim=1)
@@ -304,7 +304,7 @@ for iterator in iteration:
         rx_real2 = torch.mul(ch_real2, tx[:, 0]) - torch.mul(ch_imag2, tx[:, 1])
         rx_imag2 = torch.mul(ch_imag2, tx[:, 0]) + torch.mul(ch_real2, tx[:, 1])
         rx = torch.stack((rx_real1, rx_imag1, rx_real2, rx_imag2), dim=1)
-        rx = awgn(rx, snr)
+        rx = additive_white_gaussian_noise_channel(rx, snr)
         rx_csi = torch.cat((rx, csi), dim=1)
 
         # Decoder receiver
