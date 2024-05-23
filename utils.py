@@ -87,35 +87,35 @@ def ser_mqam_awgn(M, SNR_dB):
     return SER
 
 
-def rayleigh_channel_filtered_gaussian(fmT, Omgp=1, sample_num=3000):
+def rayleigh_channel_filtered_gaussian(fmT, Omgp=1, sample_num=3000, device="cpu"):
     """
     Generate the in-phase and quadrature components of a Rayleigh fading channel with filtered Gaussian noise.
 
     Parameters:
-    - fmT: The normalized Doppler frequency, fmT = f_m * T, where f_m is the maximum Doppler frequency and T is the symbol period.
+    - fmT: The normalized Doppler frequency, fmT = f_m * T.
     - Omgp: The power spectral density of the Gaussian noise source.
     - sample_num: The number of samples to generate.
+    - device: The device (CPU or GPU) where the tensors should be located.
 
     Returns:
     - gI: The in-phase component of the Rayleigh fading channel.
     - gQ: The quadrature component of the Rayleigh fading channel.
     """
-
-    # Calculate sigma for the first-order low-pass filter
     sigma = (
-        2 - np.cos(np.pi * fmT / 2) - np.sqrt((2 - np.cos(np.pi * fmT / 2)) ** 2 - 1)
-    )
+        2
+        - torch.cos(torch.tensor(np.pi * fmT / 2))
+        - torch.sqrt((2 - torch.cos(torch.tensor(np.pi * fmT / 2))) ** 2 - 1)
+    ).to(device)
 
-    # Calculate the variance of Gaussian noise source
     var = (1 + sigma) / (1 - sigma) * Omgp / 2
 
     # Generate two independent white Gaussian noise sources for Gi and Gq
-    w1 = np.random.normal(0, np.sqrt(var), sample_num)
-    w2 = np.random.normal(0, np.sqrt(var), sample_num)
+    w1 = torch.normal(0, torch.sqrt(var), size=(sample_num,), device=device)
+    w2 = torch.normal(0, torch.sqrt(var), size=(sample_num,), device=device)
 
     # Initialize the in-phase (Gi) and quadrature (Gq) output arrays
-    gI = np.zeros(sample_num)
-    gQ = np.zeros(sample_num)
+    gI = torch.zeros(sample_num, device=device)
+    gQ = torch.zeros(sample_num, device=device)
     gI[0] = 1  # Initial condition
     gQ[0] = 1  # Initial condition
 
@@ -124,47 +124,47 @@ def rayleigh_channel_filtered_gaussian(fmT, Omgp=1, sample_num=3000):
         gI[j] = sigma * gI[j - 1] + (1 - sigma) * w1[j - 1]
         gQ[j] = sigma * gQ[j - 1] + (1 - sigma) * w2[j - 1]
 
-    # Return the in-phase and quadrature components
     return gI, gQ
 
 
-def rayleigh_channel_sum_of_sinusoids(fmT, M, T=1, sample_num=3000):
+def rayleigh_channel_sum_of_sinusoids(fmT, M, T=1, sample_num=3000, device="cpu"):
     """
     Generate the in-phase and quadrature components of a Rayleigh fading channel using the sum of sinusoids method.
 
     Parameters:
-    - fmT: The normalized Doppler frequency, fmT = f_m * T, where f_m is the maximum Doppler frequency and T is the symbol period.
+    - fmT: The normalized Doppler frequency, fmT = f_m * T.
     - M: The number of sinusoids to use in the sum.
     - T: The symbol period.
     - sample_num: The number of samples to generate.
+    - device: The device (CPU or GPU) where the tensors should be located.
 
     Returns:
     - gI: The in-phase component of the Rayleigh fading channel.
     - gQ: The quadrature component of the Rayleigh fading channel.
     """
-
-    fm = fmT / T
-    m = np.arange(1, M + 1)
+    fm = torch.tensor(fmT / T, device=device)
+    m = torch.arange(1, M + 1, device=device)
     N = 4 * M + 2
-    n = np.arange(1, N + 1)
-    theta_n = 2 * np.pi * n / N  # theta_n is uniformly distributed
+    n = torch.arange(1, N + 1, device=device)
+    theta_n = 2 * torch.pi * n / N  # theta_n is uniformly distributed
     theta_m = theta_n[:M]
-    beta_m = np.pi * m / M
-    alpha = 0
+    beta_m = torch.pi * m / M
+    alpha = torch.tensor(0.0, device=device)  # Ensure alpha is a tensor
 
     # Calculate the Doppler shifts for different angles
-    fn = np.outer(fm, np.cos(theta_m))
+    fn = torch.outer(fm, torch.cos(theta_m))
 
-    gI = np.zeros(sample_num + 1)
-    gQ = np.zeros(sample_num + 1)
+    gI = torch.zeros(sample_num + 1, device=device)
+    gQ = torch.zeros(sample_num + 1, device=device)
 
     # Calculate gI and gQ using sum of sinusoids
     for t in range(sample_num + 1):
-        gI[t] = 2 * np.sum(
-            np.cos(beta_m) * np.cos(2 * np.pi * t * fn), axis=1
-        ) + np.sqrt(2) * np.cos(alpha) * np.cos(2 * np.pi * fm * t)
-        gQ[t] = 2 * np.sum(
-            np.sin(beta_m) * np.cos(2 * np.pi * t * fn), axis=1
-        ) + np.sqrt(2) * np.sin(alpha) * np.cos(2 * np.pi * fm * t)
+        cos_component = torch.cos(2 * torch.pi * t * fn)
+        gI[t] = 2 * torch.sum(torch.cos(beta_m) * cos_component) + torch.sqrt(
+            torch.tensor(2.0, device=device)
+        ) * torch.cos(alpha) * torch.cos(2 * torch.pi * fm * t)
+        gQ[t] = 2 * torch.sum(torch.sin(beta_m) * cos_component) + torch.sqrt(
+            torch.tensor(2.0, device=device)
+        ) * torch.sin(alpha) * torch.cos(2 * torch.pi * fm * t)
 
     return gI, gQ
