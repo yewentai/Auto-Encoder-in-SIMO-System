@@ -149,22 +149,23 @@ def rayleigh_channel_sum_of_sinusoids(fmT, M, T=1, sample_num=3000, device="cpu"
     theta_n = 2 * torch.pi * n / N  # theta_n is uniformly distributed
     theta_m = theta_n[:M]
     beta_m = torch.pi * m / M
-    alpha = torch.tensor(0.0, device=device)  # Ensure alpha is a tensor
+    alpha = torch.tensor(0.0, device=device)
 
     # Calculate the Doppler shifts for different angles
-    fn = torch.outer(fm, torch.cos(theta_m))
+    fn = fm * torch.cos(theta_m).unsqueeze(0)  # Using broadcasting instead of outer
 
     gI = torch.zeros(sample_num + 1, device=device)
     gQ = torch.zeros(sample_num + 1, device=device)
 
     # Calculate gI and gQ using sum of sinusoids
     for t in range(sample_num + 1):
-        cos_component = torch.cos(2 * torch.pi * t * fn)
+        t_tensor = torch.tensor(t, device=device)  # Convert t to a tensor
+        cos_component = torch.cos(2 * torch.pi * t_tensor * fn)
         gI[t] = 2 * torch.sum(torch.cos(beta_m) * cos_component) + torch.sqrt(
             torch.tensor(2.0, device=device)
-        ) * torch.cos(alpha) * torch.cos(2 * torch.pi * fm * t)
+        ) * torch.cos(alpha) * torch.cos(2 * torch.pi * fm * t_tensor)
         gQ[t] = 2 * torch.sum(torch.sin(beta_m) * cos_component) + torch.sqrt(
             torch.tensor(2.0, device=device)
-        ) * torch.sin(alpha) * torch.cos(2 * torch.pi * fm * t)
+        ) * torch.sin(alpha) * torch.cos(2 * torch.pi * fm * t_tensor)
 
     return gI, gQ
