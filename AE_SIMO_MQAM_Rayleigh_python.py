@@ -14,8 +14,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os
 
-from utils import Encoder, Decoder, additive_white_gaussian_noise_channel
-from gen_tx import *
+from utils import *
 
 
 # In[2]:
