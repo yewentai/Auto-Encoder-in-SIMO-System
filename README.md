@@ -18,6 +18,8 @@ Then I try to remove the CSI from the decoder. The result is not good. The BER i
 
 **Try to add a channel estimator.**
 
+NN channel estimator doesn't need do design the "pilot"
+
 ### [Step 4](AE_SISO_MQAM_Rayleigh_GNU.ipynb)
 
 Then I try to use GNU Radio's channel block to generate the dataset and train the model. In this way the gradient infomation of the channel is lost.
