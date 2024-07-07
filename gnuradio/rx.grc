@@ -51,7 +51,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 16.0]
+    coordinate: [424, 8.0]
     rotation: 0
     state: enabled
 - name: Frequency
@@ -72,7 +72,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [264, 16.0]
+    coordinate: [216, 8.0]
     rotation: 0
     state: enabled
 - name: RF_Gain
@@ -93,7 +93,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [384, 16.0]
+    coordinate: [328, 8.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -105,7 +105,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [136, 8.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0_0
@@ -123,28 +123,30 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 204.0]
+    coordinate: [464, 132.0]
     rotation: 0
     state: enabled
-- name: blocks_throttle2_0
-  id: blocks_throttle2
+- name: root_raised_cosine_filter_0
+  id: root_raised_cosine_filter
   parameters:
     affinity: ''
     alias: ''
+    alpha: '0.35'
     comment: ''
-    ignoretag: 'True'
-    limit: auto
-    maximum: '0.1'
+    decim: '1'
+    gain: '1'
+    interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate
-    type: complex
-    vlen: '1'
+    ntaps: 11*samp_rate
+    samp_rate: samp_rate
+    sym_rate: '1.0'
+    type: fir_filter_ccf
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 208.0]
+    coordinate: [264, 116.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -580,13 +582,13 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 192.0]
+    coordinate: [40, 120.0]
     rotation: 0
     state: enabled
 
 connections:
-- [blocks_throttle2_0, '0', blocks_file_sink_0_0, '0']
-- [uhd_usrp_source_0, '0', blocks_throttle2_0, '0']
+- [root_raised_cosine_filter_0, '0', blocks_file_sink_0_0, '0']
+- [uhd_usrp_source_0, '0', root_raised_cosine_filter_0, '0']
 
 metadata:
   file_format: 1

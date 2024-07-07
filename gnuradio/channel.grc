@@ -37,12 +37,12 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: '25000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [144, 8.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -85,27 +85,6 @@ blocks:
     coordinate: [8, 88.0]
     rotation: 0
     state: enabled
-- name: blocks_throttle2_0
-  id: blocks_throttle2
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    ignoretag: 'True'
-    limit: auto
-    maximum: '0.1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    samples_per_second: samp_rate
-    type: complex
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [136, 104.0]
-    rotation: 0
-    state: enabled
 - name: channels_channel_model_0
   id: channels_channel_model
   parameters:
@@ -124,7 +103,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 84.0]
+    coordinate: [456, 84.0]
     rotation: 0
     state: enabled
 - name: channels_fading_model_0
@@ -144,13 +123,12 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [264, 88.0]
+    coordinate: [224, 88.0]
     rotation: 0
     state: enabled
 
 connections:
-- [blocks_file_source_0_0, '0', blocks_throttle2_0, '0']
-- [blocks_throttle2_0, '0', channels_fading_model_0, '0']
+- [blocks_file_source_0_0, '0', channels_fading_model_0, '0']
 - [channels_channel_model_0, '0', blocks_file_sink_0, '0']
 - [channels_fading_model_0, '0', channels_channel_model_0, '0']
 
