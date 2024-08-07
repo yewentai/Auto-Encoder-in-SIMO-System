@@ -204,9 +204,9 @@ class txrxfile(gr.top_block, Qt.QWidget):
             noise_seed=0,
             block_tags=False)
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/Users/wentai/Codes/Auto-Encoder-in-MIMO-System/file/tx.dat', True, 0, 0)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_gr_complex*1, '/Users/wentai/Codes/Auto-Encoder-in-SIMO-System/file/tx.dat', False, 0, 0)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, '/Users/wentai/Codes/Auto-Encoder-in-MIMO-System/file/rx.dat', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_gr_complex*1, '/Users/wentai/Codes/Auto-Encoder-in-SIMO-System/file/rx.dat', False)
         self.blocks_file_sink_0.set_unbuffered(False)
 
 
