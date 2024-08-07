@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: yewentai
+    author: root
     catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
@@ -33,106 +33,18 @@ options:
     state: enabled
 
 blocks:
-- name: Bandwidth
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: 200e3
-    step: '100'
-    stop: 56e6
-    value: 20e6
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [384, 8.0]
-    rotation: 0
-    state: enabled
-- name: Frequency
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: 70e6
-    step: '1000'
-    stop: 6000e6
-    value: 870e6
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [200, 8.0]
-    rotation: 0
-    state: enabled
-- name: RF_Gain
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: '1'
-    stop: '40'
-    value: '10'
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [296, 8.0]
-    rotation: 0
-    state: enabled
-- name: encoder
-  id: variable_constellation
-  parameters:
-    comment: ''
-    const_points: '[-1-1j, -1+1j, 1+1j, 1-1j]'
-    dims: '1'
-    normalization: digital.constellation.AMPLITUDE_NORMALIZATION
-    npwr: '1.0'
-    precision: '8'
-    rot_sym: '4'
-    soft_dec_lut: None
-    sym_map: '[0, 1, 3, 2]'
-    type: 8psk
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [480, 8.0]
-    rotation: 0
-    state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-<<<<<<< HEAD
     value: '500000'
-=======
-    value: '25000'
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [128, 8.0]
+    coordinate: [200, 12]
     rotation: 0
     state: enabled
-<<<<<<< HEAD
 - name: symbol_rate
   id: variable
   parameters:
@@ -142,7 +54,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [120, 64.0]
+    coordinate: [288, 16.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0
@@ -152,38 +64,19 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: ''
+    file: /Users/wentai/Codes/Auto-Encoder-in-MIMO-System/file/tx.dat
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
-    repeat: 'False'
+    repeat: 'True'
     type: complex
     vlen: '1'
-=======
-- name: analog_random_source_x_0_0
-  id: analog_random_source_x
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    max: '8'
-    maxoutbuf: '0'
-    min: '0'
-    minoutbuf: '0'
-    num_samps: '1000'
-    repeat: 'True'
-    type: byte
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [32, 160.0]
-=======
-    coordinate: [16, 168.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
+    coordinate: [64, 184.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -198,18 +91,13 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
-<<<<<<< HEAD
     type: complex
-=======
-    type: byte
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [216, 176.0]
+    coordinate: [232, 200.0]
     rotation: 0
     state: bypassed
 - name: filter_fft_rrc_filter_0
@@ -228,230 +116,13 @@ blocks:
     samp_rate: samp_rate
     sym_rate: symbol_rate
     type: ccc
-=======
-    coordinate: [192, 176.0]
-    rotation: 0
-    state: bypassed
-- name: digital_constellation_modulator_0
-  id: digital_constellation_modulator
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    constellation: encoder
-    differential: 'True'
-    excess_bw: '0.35'
-    log: 'False'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    samples_per_symbol: '2'
-    truncate: 'False'
-    verbose: 'False'
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [400, 152.0]
-=======
-    coordinate: [360, 168.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
+    coordinate: [376, 168.0]
     rotation: 0
     state: enabled
-- name: qtgui_const_sink_x_0
-  id: qtgui_const_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'False'
-    axislabels: 'True'
-    color1: '"blue"'
-    color10: '"dark blue"'
-    color2: '"red"'
-    color3: '"green"'
-    color4: '"black"'
-    color5: '"cyan"'
-    color6: '"magenta"'
-    color7: '"yellow"'
-    color8: '"dark red"'
-    color9: '"dark green"'
-    comment: ''
-    grid: 'False'
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    legend: 'True'
-    marker1: '0'
-    marker10: '0'
-    marker2: '0'
-    marker3: '0'
-    marker4: '0'
-    marker5: '0'
-    marker6: '0'
-    marker7: '0'
-    marker8: '0'
-    marker9: '0'
-    name: '""'
-    nconnections: '1'
-    size: '1024'
-    style1: '0'
-    style10: '0'
-    style2: '0'
-    style3: '0'
-    style4: '0'
-    style5: '0'
-    style6: '0'
-    style7: '0'
-    style8: '0'
-    style9: '0'
-    tr_chan: '0'
-    tr_level: '0.0'
-    tr_mode: qtgui.TRIG_MODE_FREE
-    tr_slope: qtgui.TRIG_SLOPE_POS
-    tr_tag: '""'
-    type: complex
-    update_time: '0.10'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    xmax: '2'
-    xmin: '-2'
-    ymax: '2'
-    ymin: '-2'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-<<<<<<< HEAD
-    coordinate: [688, 272.0]
-=======
-    coordinate: [848, 128.0]
-    rotation: 0
-    state: disabled
-- name: qtgui_time_sink_x_0
-  id: qtgui_time_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    alpha1: '1.0'
-    alpha10: '1.0'
-    alpha2: '1.0'
-    alpha3: '1.0'
-    alpha4: '1.0'
-    alpha5: '1.0'
-    alpha6: '1.0'
-    alpha7: '1.0'
-    alpha8: '1.0'
-    alpha9: '1.0'
-    autoscale: 'False'
-    axislabels: 'True'
-    color1: blue
-    color10: dark blue
-    color2: red
-    color3: green
-    color4: black
-    color5: cyan
-    color6: magenta
-    color7: yellow
-    color8: dark red
-    color9: dark green
-    comment: ''
-    ctrlpanel: 'False'
-    entags: 'True'
-    grid: 'False'
-    gui_hint: ''
-    label1: Signal 1
-    label10: Signal 10
-    label2: Signal 2
-    label3: Signal 3
-    label4: Signal 4
-    label5: Signal 5
-    label6: Signal 6
-    label7: Signal 7
-    label8: Signal 8
-    label9: Signal 9
-    legend: 'True'
-    marker1: '-1'
-    marker10: '-1'
-    marker2: '-1'
-    marker3: '-1'
-    marker4: '-1'
-    marker5: '-1'
-    marker6: '-1'
-    marker7: '-1'
-    marker8: '-1'
-    marker9: '-1'
-    name: '""'
-    nconnections: '1'
-    size: '1024'
-    srate: samp_rate
-    stemplot: 'False'
-    style1: '1'
-    style10: '1'
-    style2: '1'
-    style3: '1'
-    style4: '1'
-    style5: '1'
-    style6: '1'
-    style7: '1'
-    style8: '1'
-    style9: '1'
-    tr_chan: '0'
-    tr_delay: '0'
-    tr_level: '0.0'
-    tr_mode: qtgui.TRIG_MODE_FREE
-    tr_slope: qtgui.TRIG_SLOPE_POS
-    tr_tag: '""'
-    type: complex
-    update_time: '0.10'
-    width1: '1'
-    width10: '1'
-    width2: '1'
-    width3: '1'
-    width4: '1'
-    width5: '1'
-    width6: '1'
-    width7: '1'
-    width8: '1'
-    width9: '1'
-    ylabel: Amplitude
-    ymax: '1'
-    ymin: '-1'
-    yunit: '""'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [800, 256.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
-    rotation: 0
-    state: disabled
 - name: uhd_usrp_sink_0
   id: uhd_usrp_sink
   parameters:
@@ -489,7 +160,7 @@ blocks:
     ant7: '"TX/RX"'
     ant8: '"TX/RX"'
     ant9: '"TX/RX"'
-    bw0: Bandwidth
+    bw0: '0'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -521,7 +192,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: Frequency
+    center_freq0: '0'
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -563,9 +234,9 @@ blocks:
     clock_source6: ''
     clock_source7: ''
     comment: ''
-    dev_addr: ''
+    dev_addr: '"serial=31DB53A"'
     dev_args: ''
-    gain0: RF_Gain
+    gain0: '0'
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -699,7 +370,7 @@ blocks:
     nchan: '1'
     num_mboards: '1'
     otw: ''
-    samp_rate: Bandwidth
+    samp_rate: samp_rate
     sd_spec0: ''
     sd_spec1: ''
     sd_spec2: ''
@@ -712,7 +383,7 @@ blocks:
     start_time: '-1.0'
     stream_args: ''
     stream_chans: '[]'
-    sync: none
+    sync: pc_clock
     time_source0: ''
     time_source1: ''
     time_source2: ''
@@ -726,16 +397,11 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [696, 140.0]
-=======
-    coordinate: [632, 128.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
+    coordinate: [616, 144.0]
     rotation: 0
     state: enabled
 
 connections:
-<<<<<<< HEAD
 - [blocks_file_source_0, '0', blocks_throttle2_0, '0']
 - [blocks_throttle2_0, '0', filter_fft_rrc_filter_0, '0']
 - [filter_fft_rrc_filter_0, '0', uhd_usrp_sink_0, '0']
@@ -743,13 +409,3 @@ connections:
 metadata:
   file_format: 1
   grc_version: 3.10.11.0
-=======
-- [analog_random_source_x_0_0, '0', blocks_throttle2_0, '0']
-- [blocks_throttle2_0, '0', digital_constellation_modulator_0, '0']
-- [digital_constellation_modulator_0, '0', qtgui_const_sink_x_0, '0']
-- [digital_constellation_modulator_0, '0', uhd_usrp_sink_0, '0']
-
-metadata:
-  file_format: 1
-  grc_version: 3.10.9.2
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
