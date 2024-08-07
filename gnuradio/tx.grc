@@ -33,6 +33,42 @@ options:
     state: enabled
 
 blocks:
+- name: RF_gain
+  id: variable
+  parameters:
+    comment: ''
+    value: '50'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 24.0]
+    rotation: 0
+    state: enabled
+- name: bandwidth
+  id: variable
+  parameters:
+    comment: ''
+    value: '250000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 24.0]
+    rotation: 0
+    state: enabled
+- name: center_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: 870e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [208, 24.0]
+    rotation: 0
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -42,19 +78,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 12]
-    rotation: 0
-    state: enabled
-- name: symbol_rate
-  id: variable
-  parameters:
-    comment: ''
-    value: '250000'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [288, 16.0]
+    coordinate: [136, 24.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0
@@ -76,7 +100,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 184.0]
+    coordinate: [16, 104.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -97,7 +121,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [232, 200.0]
+    coordinate: [192, 120.0]
     rotation: 0
     state: bypassed
 - name: filter_fft_rrc_filter_0
@@ -114,13 +138,13 @@ blocks:
     ntaps: '20'
     nthreads: '1'
     samp_rate: samp_rate
-    sym_rate: symbol_rate
+    sym_rate: bandwidth
     type: ccc
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [376, 168.0]
+    coordinate: [328, 96.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_sink_0
@@ -160,7 +184,7 @@ blocks:
     ant7: '"TX/RX"'
     ant8: '"TX/RX"'
     ant9: '"TX/RX"'
-    bw0: '0'
+    bw0: bandwidth
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -192,7 +216,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: '0'
+    center_freq0: center_freq
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -236,7 +260,7 @@ blocks:
     comment: ''
     dev_addr: '"serial=31DB53A"'
     dev_args: ''
-    gain0: '0'
+    gain0: RF_gain
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -397,7 +421,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 144.0]
+    coordinate: [576, 84.0]
     rotation: 0
     state: enabled
 

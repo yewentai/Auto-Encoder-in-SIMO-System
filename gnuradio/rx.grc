@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: yewentai
+    author: root
     catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
@@ -33,83 +33,19 @@ options:
     state: enabled
 
 blocks:
-- name: Bandwidth
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: 200e3
-    step: '100'
-    stop: 56e6
-    value: 20e6
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [424, 8.0]
-    rotation: 0
-    state: enabled
-- name: Frequency
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: 70e6
-    step: '1000'
-    stop: 6000e6
-    value: 870e6
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [216, 8.0]
-    rotation: 0
-    state: enabled
-- name: RF_Gain
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: ''
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: '1'
-    stop: '40'
-    value: '10'
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [328, 8.0]
-    rotation: 0
-    state: enabled
-- name: samp_rate
+- name: RF_gain
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: '50'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [136, 8.0]
+    coordinate: [296, 16.0]
     rotation: 0
     state: enabled
-<<<<<<< HEAD
-- name: symbol_rate
+- name: bandwidth
   id: variable
   parameters:
     comment: ''
@@ -118,19 +54,41 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [128, 64.0]
+    coordinate: [376, 16.0]
     rotation: 0
     state: enabled
-=======
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
-- name: blocks_file_sink_0_0
+- name: center_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: 870e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 16.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '500000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [144, 16.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_sink_0
   id: blocks_file_sink
   parameters:
     affinity: ''
     alias: ''
     append: 'False'
     comment: ''
-    file: ../file/rx.dat
+    file: ''
     type: complex
     unbuffered: 'False'
     vlen: '1'
@@ -138,19 +96,32 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [592, 132.0]
+    coordinate: [576, 156.0]
     rotation: 0
     state: enabled
+- name: blocks_throttle2_0_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 160.0]
+    rotation: 0
+    state: bypassed
 - name: filter_fft_rrc_filter_0
   id: filter_fft_rrc_filter
-=======
-    coordinate: [464, 132.0]
-    rotation: 0
-    state: enabled
-- name: root_raised_cosine_filter_0
-  id: root_raised_cosine_filter
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   parameters:
     affinity: ''
     alias: ''
@@ -158,32 +129,18 @@ blocks:
     comment: ''
     decim: '1'
     gain: '1'
-<<<<<<< HEAD
     maxoutbuf: '0'
     minoutbuf: '0'
     ntaps: '20'
     nthreads: '1'
     samp_rate: samp_rate
-    sym_rate: symbol_rate
+    sym_rate: bandwidth
     type: ccc
-=======
-    interp: '1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    ntaps: 11*samp_rate
-    samp_rate: samp_rate
-    sym_rate: '1.0'
-    type: fir_filter_ccf
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [400, 112.0]
-=======
-    coordinate: [264, 116.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
+    coordinate: [384, 136.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -191,7 +148,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    ant0: '"RX1"'
+    ant0: '"RX2"'
     ant1: '"RX2"'
     ant10: '"RX2"'
     ant11: '"RX2"'
@@ -223,7 +180,7 @@ blocks:
     ant7: '"RX2"'
     ant8: '"RX2"'
     ant9: '"RX2"'
-    bw0: Bandwidth
+    bw0: bandwidth
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -255,7 +212,7 @@ blocks:
     bw7: '0'
     bw8: '0'
     bw9: '0'
-    center_freq0: Frequency
+    center_freq0: center_freq
     center_freq1: '0'
     center_freq10: '0'
     center_freq11: '0'
@@ -361,9 +318,9 @@ blocks:
     dc_offs_enb7: default
     dc_offs_enb8: default
     dc_offs_enb9: default
-    dev_addr: '"serial="'
+    dev_addr: '"serial=31DB53A"'
     dev_args: ''
-    gain0: RF_Gain
+    gain0: RF_gain
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -592,7 +549,7 @@ blocks:
     rx_agc7: Default
     rx_agc8: Default
     rx_agc9: Default
-    samp_rate: Bandwidth
+    samp_rate: samp_rate
     sd_spec0: ''
     sd_spec1: ''
     sd_spec2: ''
@@ -605,7 +562,7 @@ blocks:
     start_time: '-1.0'
     stream_args: ''
     stream_chans: '[]'
-    sync: sync
+    sync: pc_clock
     time_source0: ''
     time_source1: ''
     time_source2: ''
@@ -619,27 +576,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-<<<<<<< HEAD
-    coordinate: [192, 120.0]
-=======
-    coordinate: [40, 120.0]
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
+    coordinate: [40, 152.0]
     rotation: 0
     state: enabled
 
 connections:
-<<<<<<< HEAD
-- [filter_fft_rrc_filter_0, '0', blocks_file_sink_0_0, '0']
-- [uhd_usrp_source_0, '0', filter_fft_rrc_filter_0, '0']
+- [blocks_throttle2_0_0, '0', filter_fft_rrc_filter_0, '0']
+- [filter_fft_rrc_filter_0, '0', blocks_file_sink_0, '0']
+- [uhd_usrp_source_0, '0', blocks_throttle2_0_0, '0']
 
 metadata:
   file_format: 1
   grc_version: 3.10.11.0
-=======
-- [root_raised_cosine_filter_0, '0', blocks_file_sink_0_0, '0']
-- [uhd_usrp_source_0, '0', root_raised_cosine_filter_0, '0']
-
-metadata:
-  file_format: 1
-  grc_version: 3.10.9.2
->>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
