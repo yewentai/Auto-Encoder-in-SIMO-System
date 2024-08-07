@@ -108,6 +108,21 @@ blocks:
     coordinate: [136, 8.0]
     rotation: 0
     state: enabled
+<<<<<<< HEAD
+- name: symbol_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '250000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [128, 64.0]
+    rotation: 0
+    state: enabled
+=======
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
 - name: blocks_file_sink_0_0
   id: blocks_file_sink
   parameters:
@@ -123,11 +138,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [592, 132.0]
+    rotation: 0
+    state: enabled
+- name: filter_fft_rrc_filter_0
+  id: filter_fft_rrc_filter
+=======
     coordinate: [464, 132.0]
     rotation: 0
     state: enabled
 - name: root_raised_cosine_filter_0
   id: root_raised_cosine_filter
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   parameters:
     affinity: ''
     alias: ''
@@ -135,6 +158,15 @@ blocks:
     comment: ''
     decim: '1'
     gain: '1'
+<<<<<<< HEAD
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ntaps: '20'
+    nthreads: '1'
+    samp_rate: samp_rate
+    sym_rate: symbol_rate
+    type: ccc
+=======
     interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -142,11 +174,16 @@ blocks:
     samp_rate: samp_rate
     sym_rate: '1.0'
     type: fir_filter_ccf
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [400, 112.0]
+=======
     coordinate: [264, 116.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -582,14 +619,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [192, 120.0]
+=======
     coordinate: [40, 120.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: enabled
 
 connections:
+<<<<<<< HEAD
+- [filter_fft_rrc_filter_0, '0', blocks_file_sink_0_0, '0']
+- [uhd_usrp_source_0, '0', filter_fft_rrc_filter_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.11.0
+=======
 - [root_raised_cosine_filter_0, '0', blocks_file_sink_0_0, '0']
 - [uhd_usrp_source_0, '0', root_raised_cosine_filter_0, '0']
 
 metadata:
   file_format: 1
   grc_version: 3.10.9.2
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5

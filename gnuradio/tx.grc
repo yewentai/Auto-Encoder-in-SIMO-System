@@ -120,7 +120,11 @@ blocks:
   id: variable
   parameters:
     comment: ''
+<<<<<<< HEAD
+    value: '500000'
+=======
     value: '25000'
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
@@ -128,6 +132,35 @@ blocks:
     coordinate: [128, 8.0]
     rotation: 0
     state: enabled
+<<<<<<< HEAD
+- name: symbol_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '250000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [120, 64.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: ''
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'False'
+    type: complex
+    vlen: '1'
+=======
 - name: analog_random_source_x_0_0
   id: analog_random_source_x
   parameters:
@@ -141,11 +174,16 @@ blocks:
     num_samps: '1000'
     repeat: 'True'
     type: byte
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [32, 160.0]
+=======
     coordinate: [16, 168.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -160,12 +198,37 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
+<<<<<<< HEAD
+    type: complex
+=======
     type: byte
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [216, 176.0]
+    rotation: 0
+    state: bypassed
+- name: filter_fft_rrc_filter_0
+  id: filter_fft_rrc_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: '0.35'
+    comment: ''
+    decim: '1'
+    gain: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ntaps: '20'
+    nthreads: '1'
+    samp_rate: samp_rate
+    sym_rate: symbol_rate
+    type: ccc
+=======
     coordinate: [192, 176.0]
     rotation: 0
     state: bypassed
@@ -184,11 +247,16 @@ blocks:
     samples_per_symbol: '2'
     truncate: 'False'
     verbose: 'False'
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [400, 152.0]
+=======
     coordinate: [360, 168.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: enabled
 - name: qtgui_const_sink_x_0
@@ -280,6 +348,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [688, 272.0]
+=======
     coordinate: [848, 128.0]
     rotation: 0
     state: disabled
@@ -378,6 +449,7 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [800, 256.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: disabled
 - name: uhd_usrp_sink_0
@@ -654,11 +726,24 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
+<<<<<<< HEAD
+    coordinate: [696, 140.0]
+=======
     coordinate: [632, 128.0]
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
     rotation: 0
     state: enabled
 
 connections:
+<<<<<<< HEAD
+- [blocks_file_source_0, '0', blocks_throttle2_0, '0']
+- [blocks_throttle2_0, '0', filter_fft_rrc_filter_0, '0']
+- [filter_fft_rrc_filter_0, '0', uhd_usrp_sink_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.11.0
+=======
 - [analog_random_source_x_0_0, '0', blocks_throttle2_0, '0']
 - [blocks_throttle2_0, '0', digital_constellation_modulator_0, '0']
 - [digital_constellation_modulator_0, '0', qtgui_const_sink_x_0, '0']
@@ -667,3 +752,4 @@ connections:
 metadata:
   file_format: 1
   grc_version: 3.10.9.2
+>>>>>>> 3baed770e49fbecc7308fdfc846e26c6817cabc5
