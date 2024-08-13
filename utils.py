@@ -61,6 +61,24 @@ def additive_white_gaussian_noise_channel(x, snr):
     return x
 
 
+def additive_white_gaussian_noise_channel_np(x, snr):
+    """
+    Add AWGN noise to the input signal.
+
+    Parameters:
+    - x: Input signal.
+    - snr: Signal to Noise Ratio in dB.
+
+    Returns:
+    - x: Noisy signal.
+    """
+
+    sigma = np.sqrt(0.5 / (10 ** (snr / 10)))
+    noise = sigma * np.random.randn(*x.shape)
+    x = x + noise
+    return x
+
+
 def ser_mqam_awgn(M, SNR_dB):
     """
     Calculate the Symbol Error Rate (SER) for M-QAM modulation in AWGNC. Refer to https://dsplog.com/2012/01/01/symbol-error-rate-16qam-64qam-256qam/
