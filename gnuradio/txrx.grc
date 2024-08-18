@@ -190,7 +190,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    constellation: digital.constellation_bpsk().base()
+    constellation: encoder
     damping: '0.707'
     loop_bw: '0.045'
     max_dev: '1.5'
@@ -1174,7 +1174,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 488.0]
+    coordinate: [64, 496.0]
     rotation: 0
     state: enabled
 
