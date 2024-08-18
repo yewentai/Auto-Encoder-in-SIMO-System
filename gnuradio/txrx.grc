@@ -42,7 +42,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 28.0]
+    coordinate: [280, 8.0]
     rotation: 0
     state: enabled
 - name: bandwidth
@@ -54,7 +54,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 28.0]
+    coordinate: [352, 8.0]
     rotation: 0
     state: enabled
 - name: center_freq
@@ -66,7 +66,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [320, 28.0]
+    coordinate: [200, 8.0]
+    rotation: 0
+    state: enabled
+- name: encoder
+  id: variable_constellation
+  parameters:
+    comment: ''
+    const_points: '[-1-1j, -1+1j, 1+1j, 1-1j]'
+    dims: '1'
+    normalization: digital.constellation.AMPLITUDE_NORMALIZATION
+    npwr: '1.0'
+    precision: '8'
+    rot_sym: '4'
+    soft_dec_lut: None
+    sym_map: '[0, 1, 3, 2]'
+    type: calcdist
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 8.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -78,7 +98,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 12]
+    coordinate: [128, 8.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -96,7 +116,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1008, 444.0]
+    coordinate: [1112, 420.0]
     rotation: 0
     state: enabled
 - name: blocks_file_source_0
@@ -118,7 +138,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 232.0]
+    coordinate: [72, 184.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -139,7 +159,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [344, 220.0]
+    coordinate: [312, 192.0]
     rotation: 0
     state: bypassed
 - name: blocks_throttle2_0_0
@@ -160,9 +180,36 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 428.0]
+    coordinate: [368, 424.0]
     rotation: 0
     state: bypassed
+- name: digital_symbol_sync_xx_0
+  id: digital_symbol_sync_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: digital.constellation_bpsk().base()
+    damping: '0.707'
+    loop_bw: '0.045'
+    max_dev: '1.5'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nfilters: '128'
+    osps: '1'
+    pfb_mf_taps: '[]'
+    resamp_type: digital.IR_MMSE_8TAP
+    sps: '4'
+    ted_gain: '1.0'
+    ted_type: digital.TED_MUELLER_AND_MULLER
+    type: cc
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [840, 396.0]
+    rotation: 0
+    state: enabled
 - name: filter_fft_rrc_filter_0
   id: filter_fft_rrc_filter
   parameters:
@@ -183,7 +230,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 160.0]
+    coordinate: [496, 168.0]
     rotation: 0
     state: enabled
 - name: filter_fft_rrc_filter_0_0
@@ -206,7 +253,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [648, 376.0]
+    coordinate: [584, 400.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_sink_0
@@ -483,7 +530,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [976, 160.0]
+    coordinate: [832, 152.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -927,10 +974,11 @@ connections:
 - [blocks_file_source_0, '0', blocks_throttle2_0, '0']
 - [blocks_throttle2_0, '0', filter_fft_rrc_filter_0, '0']
 - [blocks_throttle2_0_0, '0', filter_fft_rrc_filter_0_0, '0']
+- [digital_symbol_sync_xx_0, '0', blocks_file_sink_0, '0']
 - [filter_fft_rrc_filter_0, '0', uhd_usrp_sink_0, '0']
-- [filter_fft_rrc_filter_0_0, '0', blocks_file_sink_0, '0']
+- [filter_fft_rrc_filter_0_0, '0', digital_symbol_sync_xx_0, '0']
 - [uhd_usrp_source_0, '0', blocks_throttle2_0_0, '0']
 
 metadata:
   file_format: 1
-  grc_version: 3.10.10.0
+  grc_version: 3.10.11.0
