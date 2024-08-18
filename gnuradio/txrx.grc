@@ -42,19 +42,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 8.0]
+    coordinate: [368, 8.0]
     rotation: 0
     state: enabled
-- name: bandwidth
+- name: baud_rate
   id: variable
   parameters:
     comment: ''
-    value: '250000'
+    value: '50000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 8.0]
+    coordinate: [456, 8.0]
     rotation: 0
     state: enabled
 - name: center_freq
@@ -66,39 +66,64 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 8.0]
+    coordinate: [264, 8.0]
     rotation: 0
     state: enabled
 - name: encoder
   id: variable_constellation
   parameters:
     comment: ''
-    const_points: '[-1-1j, -1+1j, 1+1j, 1-1j]'
+    const_points: '[(-0.2957-0.5378j), (-0.6068-1.1345j), (0.5192+0.2398j), (1.1495+0.5140j),
+      (-0.7429+0.8150j), (-0.0184-0.0006j), (0.5418+0.9552j), (1.1049-0.2303j), (-0.5950+0.0842j),
+      (-0.0785+0.5643j), (0.3829-0.4240j), (0.1240-1.1206j), (-1.2293+0.2383j), (-0.1185+1.2399j),
+      (0.8467-0.9371j), (-1.0559-0.4968j)]
+
+      '
     dims: '1'
     normalization: digital.constellation.AMPLITUDE_NORMALIZATION
     npwr: '1.0'
     precision: '8'
     rot_sym: '4'
     soft_dec_lut: None
-    sym_map: '[0, 1, 3, 2]'
+    sym_map: '[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]'
     type: calcdist
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [424, 8.0]
+    coordinate: [552, 8.0]
     rotation: 0
     state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '500000'
+    value: baud_rate*4
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [128, 8.0]
+    coordinate: [168, 8.0]
+    rotation: 0
+    state: enabled
+- name: analog_random_source_x_0
+  id: analog_random_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    max: '16'
+    maxoutbuf: '0'
+    min: '0'
+    minoutbuf: '0'
+    num_samps: '1000'
+    repeat: 'False'
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 216.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_0
@@ -116,73 +141,49 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1112, 420.0]
+    coordinate: [960, 464.0]
     rotation: 0
     state: enabled
-- name: blocks_file_source_0
-  id: blocks_file_source
+- name: blocks_file_sink_0_0
+  id: blocks_file_sink
   parameters:
     affinity: ''
     alias: ''
-    begin_tag: pmt.PMT_NIL
+    append: 'False'
     comment: ''
     file: C:\Users\Junchen Zhu\Downloads\Auto-Encoder-in-SIMO-System\file\tx.dat
-    length: '0'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    offset: '0'
-    repeat: 'True'
     type: complex
+    unbuffered: 'False'
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [72, 184.0]
+    coordinate: [696, 272.0]
     rotation: 0
     state: enabled
-- name: blocks_throttle2_0
-  id: blocks_throttle2
+- name: digital_constellation_modulator_0
+  id: digital_constellation_modulator
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    ignoretag: 'True'
-    limit: auto
-    maximum: '0.1'
+    constellation: encoder
+    differential: 'False'
+    excess_bw: '0.35'
+    log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate
-    type: complex
-    vlen: '1'
+    samples_per_symbol: '4'
+    truncate: 'False'
+    verbose: 'False'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 192.0]
+    coordinate: [184, 216.0]
     rotation: 0
-    state: bypassed
-- name: blocks_throttle2_0_0
-  id: blocks_throttle2
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    ignoretag: 'True'
-    limit: auto
-    maximum: '0.1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    samples_per_second: samp_rate
-    type: complex
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [368, 424.0]
-    rotation: 0
-    state: bypassed
+    state: enabled
 - name: digital_symbol_sync_xx_0
   id: digital_symbol_sync_xx
   parameters:
@@ -207,30 +208,53 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [840, 396.0]
+    coordinate: [624, 472.0]
     rotation: 0
     state: enabled
-- name: filter_fft_rrc_filter_0
-  id: filter_fft_rrc_filter
+- name: epy_block_0
+  id: epy_block
   parameters:
+    _source_code: "import numpy as np\nfrom gnuradio import gr\n\ndef generate_zadoff_chu_sequence(root,\
+      \ length):\n    \"\"\"Generates a Zadoff-Chu sequence with specified root and\
+      \ length.\"\"\"\n    n = np.arange(length)\n    zc_seq = np.exp(-1j * np.pi\
+      \ * root * n * (n + 1) / length)\n    return zc_seq\n\nclass blk(gr.sync_block):\
+      \  # other base classes are basic_block, decim_block, interp_block\n    \"\"\
+      \"Embedded Python Block example - Add a Zadoff-Chu sequence with the same power\
+      \ as input to the beginning\"\"\"\n\n    def __init__(self, seq_length=64, root=1):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
+      \   self,\n            name='Add Zadoff-chu Sequence',   # will show up in GRC\n\
+      \            in_sig=[np.complex64],\n            out_sig=[np.complex64]\n  \
+      \      )\n        self.seq_length = seq_length\n        self.root = root\n\n\
+      \    def work(self, input_items, output_items):\n        \"\"\"Calculate input\
+      \ signal power, generate Zadoff-Chu sequence, and prepend it to the input signal\"\
+      \"\"\n        # Calculate the average power of the input signal\n        input_signal\
+      \ = input_items[0]\n        power = np.mean(np.abs(input_signal) ** 2)\n   \
+      \     \n        # Generate a Zadoff-Chu sequence\n        zc_sequence = generate_zadoff_chu_sequence(self.root,\
+      \ self.seq_length)\n        \n        # Scale the Zadoff-Chu sequence to match\
+      \ the power of the input signal\n        current_power = np.mean(np.abs(zc_sequence)\
+      \ ** 2)\n        scaling_factor = np.sqrt(power / current_power)\n        zc_sequence\
+      \ = zc_sequence * scaling_factor\n        \n        # Prepend the Zadoff-Chu\
+      \ sequence to the input signal\n        output_signal = np.concatenate([zc_sequence,\
+      \ input_signal])\n        \n        # Ensure the output length matches the expected\
+      \ length\n        output_items[0][:] = output_signal[:len(output_items[0])]\n\
+      \        return len(output_items[0])\n"
     affinity: ''
     alias: ''
-    alpha: '0.35'
     comment: ''
-    decim: '1'
-    gain: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    ntaps: '20'
-    nthreads: '1'
-    samp_rate: samp_rate
-    sym_rate: bandwidth
-    type: ccc
+    root: '5'
+    seq_length: '62'
   states:
+    _io_cache: ('Add Zadoff-chu Sequence', 'blk', [('seq_length', '64'), ('root',
+      '1')], [('0', 'complex', 1)], [('0', 'complex', 1)], 'Embedded Python Block
+      example - Add a Zadoff-Chu sequence with the same power as input to the beginning',
+      ['root', 'seq_length'])
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [496, 168.0]
+    coordinate: [440, 200.0]
     rotation: 0
     state: enabled
 - name: filter_fft_rrc_filter_0_0
@@ -247,13 +271,197 @@ blocks:
     ntaps: '20'
     nthreads: '1'
     samp_rate: samp_rate
-    sym_rate: bandwidth
+    sym_rate: baud_rate
     type: ccc
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 400.0]
+    coordinate: [368, 480.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_const_sink_x_0
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'True'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '"tx"'
+    nconnections: '1'
+    size: '1024'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 304.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_const_sink_x_0_0
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'True'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '"tx_preamble"'
+    nconnections: '1'
+    size: '1024'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 376.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_sink_0
@@ -293,7 +501,7 @@ blocks:
     ant7: '"TX/RX"'
     ant8: '"TX/RX"'
     ant9: '"TX/RX"'
-    bw0: bandwidth
+    bw0: '0'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -503,7 +711,7 @@ blocks:
     nchan: '1'
     num_mboards: '1'
     otw: ''
-    samp_rate: samp_rate
+    samp_rate: baud_rate
     sd_spec0: ''
     sd_spec1: ''
     sd_spec2: ''
@@ -516,7 +724,7 @@ blocks:
     start_time: '-1.0'
     stream_args: ''
     stream_chans: '[]'
-    sync: none
+    sync: sync
     time_source0: ''
     time_source1: ''
     time_source2: ''
@@ -530,7 +738,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 152.0]
+    coordinate: [896, 144.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -538,7 +746,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    ant0: '"RX1"'
+    ant0: '"RX2"'
     ant1: '"RX2"'
     ant10: '"RX2"'
     ant11: '"RX2"'
@@ -570,7 +778,7 @@ blocks:
     ant7: '"RX2"'
     ant8: '"RX2"'
     ant9: '"RX2"'
-    bw0: bandwidth
+    bw0: '0'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -939,7 +1147,7 @@ blocks:
     rx_agc7: Default
     rx_agc8: Default
     rx_agc9: Default
-    samp_rate: samp_rate
+    samp_rate: baud_rate
     sd_spec0: ''
     sd_spec1: ''
     sd_spec2: ''
@@ -952,7 +1160,7 @@ blocks:
     start_time: '-1.0'
     stream_args: ''
     stream_chans: '[]'
-    sync: none
+    sync: sync
     time_source0: ''
     time_source1: ''
     time_source2: ''
@@ -966,19 +1174,21 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [72, 412.0]
+    coordinate: [64, 488.0]
     rotation: 0
     state: enabled
 
 connections:
-- [blocks_file_source_0, '0', blocks_throttle2_0, '0']
-- [blocks_throttle2_0, '0', filter_fft_rrc_filter_0, '0']
-- [blocks_throttle2_0_0, '0', filter_fft_rrc_filter_0_0, '0']
+- [analog_random_source_x_0, '0', digital_constellation_modulator_0, '0']
+- [digital_constellation_modulator_0, '0', epy_block_0, '0']
+- [digital_constellation_modulator_0, '0', qtgui_const_sink_x_0, '0']
 - [digital_symbol_sync_xx_0, '0', blocks_file_sink_0, '0']
-- [filter_fft_rrc_filter_0, '0', uhd_usrp_sink_0, '0']
+- [epy_block_0, '0', blocks_file_sink_0_0, '0']
+- [epy_block_0, '0', qtgui_const_sink_x_0_0, '0']
+- [epy_block_0, '0', uhd_usrp_sink_0, '0']
 - [filter_fft_rrc_filter_0_0, '0', digital_symbol_sync_xx_0, '0']
-- [uhd_usrp_source_0, '0', blocks_throttle2_0_0, '0']
+- [uhd_usrp_source_0, '0', filter_fft_rrc_filter_0_0, '0']
 
 metadata:
   file_format: 1
-  grc_version: 3.10.11.0
+  grc_version: 3.10.10.0
