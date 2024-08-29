@@ -187,3 +187,4 @@ def rayleigh_channel_sum_of_sinusoids(fmT, M, T=1, sample_num=3000, device="cpu"
         ) * torch.sin(alpha) * torch.cos(2 * torch.pi * fm * t_tensor)
 
     return gI, gQ
+
