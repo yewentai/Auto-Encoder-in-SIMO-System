@@ -1,25 +1,68 @@
-# Auto-encoder in wireless communication system
+# Deep Learning-Based Physical Layer Communication: Concept and Prototyping
 
-## Explanation of the code
+## Overview
 
-### [Step 1](./AE_SISO_MQAM_AWGN_python.ipynb)
+This project explores the application of deep learning techniques in physical-layer communication systems, focusing on the use of **autoencoders** to jointly optimize transmitter and receiver performance. Traditional communication systems are typically broken down into distinct blocks (source coding, channel coding, modulation), each optimized separately. In contrast, the **channel autoencoder** approach treats the communication system as an end-to-end learning problem, offering new ways to improve communication performance.
 
-Auto-encoder in SISO system with 16QAM modulation, AWGN channel, without CSI has shown fair performance in terms of BER. Even 16*8*2 encoder and 2*16*16 decoder has outperformed the traditional 16QAM modulation.
+The project compares **traditional communication methods** with **autoencoder-based approaches** in both simulation and real-world environments, using **SISO** (Single Input Single Output) and **SIMO** (Single Input Multiple Output) systems. The experimental setup is based on **GNU Radio** and **USRP B210 hardware**.
 
-### [Step 2](AE_SISO_MQAM_Rayleigh_python.ipynb)
+## Project Goals
 
-Then I transferred the code to the rayleigh fading channel. The rayleigh fading channel is simulated by generating random complex channel coefficients, performing complex multiplication, adding white Gaussian noise.
+1. **Explore Factors Impacting Deep Learning in Communication**: Investigating key factors that influence the performance of deep learning models in physical-layer communication systems.
+  
+2. **Compare with Traditional Baselines**: Benchmarking autoencoder-based methods against traditional communication systems in SISO and SIMO setups.
 
-First, I enlarge the size of the encoder and decoder to 16*16*16*2 and 4*512*512*16. Then I add perfect CSI to the decoder. The result looks good.
+3. **Test in Real-World Scenarios**: Deploying the models in over-the-air transmissions using GNU Radio and USRP B210 hardware.
 
-### [Step 3](AE_SISO_MQAM_Rayleigh_python_no_CSI.ipynb)
+## System Architecture
 
-Then I try to remove the CSI from the decoder. The result is not good. The BER is very high. The reason is that the channel is time-varying. The channel is different for each symbol. The decoder cannot decode the symbol without knowing the channel.
+### Autoencoder Model
 
-**Try to add a channel estimator.**
+The autoencoder used in this project consists of:
+- **Encoder**: Converts the one-hot encoded message into a complex IQ symbol for transmission.
+- **Channel**: Simulated or real channel (AWGN, Rayleigh fading, etc.) over which the symbol is transmitted.
+- **Decoder**: Receives the IQ samples and estimates the transmitted message.
 
-NN channel estimator doesn't need do design the "pilot"
+The **negative log-likelihood loss** is used, and the model is optimized using the **Adam optimizer**.
 
-### [Step 4](AE_SISO_MQAM_Rayleigh_GNU.ipynb)
+### Channel Models
 
-Then I try to use GNU Radio's channel block to generate the dataset and train the model. In this way the gradient infomation of the channel is lost.
+1. **AWGN Channel**: Additive White Gaussian Noise channel, used as the simplest case.
+2. **Rayleigh Fading Channel**: Modeled using filtered Gaussian noise and sum-of-sinusoids methods.
+3. **Pulse Shaping**: Implemented using a **root-raised cosine filter** to reduce the signal bandwidth and make the model more realistic for over-the-air transmission.
+
+### Two-Phase Training Strategy
+
+1. **Phase 1: Simulated Channel Training**: The autoencoder is trained using a simulated channel model, aiming to approximate real-world channel behavior.
+   
+2. **Phase 2: Fine-tuning on Real Channel Data**: After deployment, the receiver is fine-tuned using actual IQ samples collected from over-the-air transmissions to account for any mismatch between the simulated and real channels.
+
+## Experimental Setup
+
+The hardware setup includes:
+- **USRP B210**: SDR board used for transmitting and receiving over-the-air signals.
+- **GNU Radio**: Software platform for signal processing.
+- **Zadoff-Chu Sequence**: Used for frame synchronization, taking advantage of its low autocorrelation sidelobes.
+
+Experiments are conducted in an office environment, with the following configuration:
+- **SISO System**: Evaluated using 16-QAM modulation, compared with minimum distance decoding as a baseline.
+- **SIMO System**: Evaluated with two receiver antennas, compared with Maximal Ratio Combining (MRC) as the baseline.
+
+## Results
+
+### SISO System
+- **AWGN Channel**: The autoencoder outperforms traditional minimum distance decoding across all Signal-to-Noise Ratios (SNRs).
+- **Rayleigh Channel**: The autoencoder performs better than traditional Zero Forcing techniques at higher SNRs but underperforms at lower SNRs.
+
+### SIMO System
+- **AWGN Channel**: The autoencoder lags behind MRC at lower SNRs but surpasses it at higher SNRs.
+- **Rayleigh Channel**: The autoencoder outperforms MRC across all SNRs.
+
+### Over-the-Air Results
+The real-world experiments revealed higher **Symbol Error Rates (SER)** than simulations. This discrepancy is mainly due to the lack of symbol synchronization and unmodeled real-world factors like **sampling time offsets** and **carrier frequency offsets**.
+
+## Future Work
+
+- **Symbol Synchronization**: Implementing symbol synchronization to reduce over-the-air error rates.
+- **Improved Channel Models**: Incorporating carrier frequency offset and sample time offset to bridge the gap between simulation and real-world performance.
+- **Advanced Architectures**: Exploring the use of more sophisticated deep learning architectures, such as **convolutional neural networks**, **recurrent neural networks**, or **transformer-based models** for further improvement.
